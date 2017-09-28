@@ -1,0 +1,70 @@
+{{ form.media }}
+
+<div id="all">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-content nopadding">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label">最大判题数：</label>
+                                <div class="controls"><input id="max" value="{{ max }}" name="max" type="text" class="span9" placeholder="Max" /> </div>
+                            </div>
+                            <div class="control-group">
+					            <label class="control-label">Ip：</label>
+					            <div class="controls"><input id="ip" value="{{ ip }}" name="ip" type="text" class="span9" placeholder="Ip" /> </div>
+						    </div>
+                            <div class="control-group">
+					            <label class="control-label">Port：</label>
+					            <div class="controls"><input id="port" value="{{ port }}" name="port" type="text" class="span9" placeholder="Port" /> </div>
+						    </div>
+                            <div class="control-group">
+						        <label class="control-label">远程判题：</label>
+					            <div class="controls ">
+							        <select id="remote" name="remote">
+								        <option value="1" {% if remote == 1 %}selected = "selected"{% endif %}>是</option>
+								        <option value="0" {% if remote == 0 %}selected = "selected"{% endif %}>否</option>
+							        </select>
+						        </div>
+						    </div>
+                            <div class="control-group">
+				                <label class="control-label">Token：</label>
+						        <div class="controls"><input id="token" value="{{ token }}" name="token" type="text" class="span9" placeholder="Token"/> </div>
+				            </div>
+                            {% if action == 'add' %}
+					        <div class="form-actions">
+					            <button id="submit" class="btn btn-success">添加</button>
+					        </div>
+                            {% else %}
+                            <div class="form-actions">
+					            <button id="submit" class="btn btn-success">修改</button>
+					        </div>
+                            {% endif %}
+				        </form>
+			        </div>
+		        </div>						
+	        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+{% if action == 'add' %}
+    $(document).ready(function(){
+        $("#submit").click(function(){
+            $.post("/manage/add/judger/",{'token':$("#token").val(), 'remote':$("#remote").val(), 'port':$("#port").val(), 'ip':$("#ip").val(), 'max':$("#max").val()}, function(ret){
+                $('#all').html(ret);
+            })
+        });
+    });
+{% else %}
+    $(document).ready(function(){
+        $("#submit").click(function(){
+            $.post("/manage/edit/judger/",{'id':{{ id }}, 'token':$("#token").val(), 'remote':$("#remote").val(), 'port':$("#port").val(), 'ip':$("#ip").val(), 'max':$("#max").val()}, function(ret){
+                $('#all').html(ret);
+            })
+        });
+    });
+{% endif %}
+</script>

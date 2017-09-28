@@ -1,0 +1,100 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>USTIL Online Judge</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/css/select2.css" />
+<link rel="stylesheet" href="/static/css/maruti-style.css" />
+<link rel="stylesheet" href="/static/css/maruti-media.css" class="skin-color" />
+</head>
+<body>
+<div id="header">
+  <h1><a href="dashboard.html">USTIL Online Judge</a></h1>
+</div>
+<div class="btn-group rightzero"> <a class="top_message tip-left" title="Manage Files"><i class="icon-file"></i></a> <a class="top_message tip-bottom" title="Manage Users"><i class="icon-user"></i></a> <a class="top_message tip-bottom" title="Manage Comments"><i class="icon-comment"></i><span class="label label-important">5</span></a> <a class="top_message tip-bottom" title="Manage Orders"><i class="icon-shopping-cart"></i></a> </div>
+<div id="user-nav" class="navbar navbar-inverse">
+    {% if not user.is_authenticated %}
+    <ul class="nav">
+        <li class=""><a href="/account/login/" id='login'><i class="icon icon-user"></i> <span class="text">Login</span></a></li>
+        <li class=""><a href="/account/register/" id='register'><i class="icon icon-share-alt"></i> <span class="text">Register</span></a></li>
+    </ul>
+    {% else %}
+    <ul class="nav">
+        <li class="" ><a title="" href="#"><i class="icon icon-user"></i> <span class="text">Hi, {{ user.username }}</span></a></li>
+        <!--li class=" dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">1</span> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a class="sAdd" title="" href="#">new message</a></li>
+            <li><a class="sInbox" title="" href="#">inbox</a></li>
+            <li><a class="sOutbox" title="" href="#">outbox</a></li>
+            <li><a class="sTrash" title="" href="#">trash</a></li>
+          </ul>
+        </li-->
+        <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
+        <li class=""><a title="" href="/account/logout/"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+    </ul>
+    {% endif %}
+</div>
+<div id="search">
+  <input type="text" placeholder="Search Click Right ->"/>
+  <button data-toggle="modal" id="searcher" href="#SearchModal" class="tip-left" title="Search"><i class="icon-search icon-white"></i></button>
+</div>
+<div id="SearchModal" class="modal hide">
+             <div class="modal-header">
+                 <button data-dismiss="modal" class="close" type="button">×</button>
+                 <h3>Search</h3>
+             </div>
+             <div class="modal-body">
+                 <span id='SearchSpan'>正在读取...</span>
+             </div>
+             <div class="modal-footer"><a data-dismiss="modal" class="btn btn-primary" href="#">Cancel</a> </div>
+         </div>
+<div id="sidebar">
+  <ul>
+    <li><a href="/"><i class="icon icon-home"></i> <span>Home</span></a></li>
+    <li><a href="/problem/"><i class="icon icon-th"></i> <span>Problem</span></a></li>
+    <li><a href="/solution/"><i class="icon icon-fullscreen"></i> <span>Solution</span></a></li>
+    <li><a href="/contest/"><i class="icon icon-th-list"></i> <span>Contest</span> <!--span class="label">3</span--></a></li>
+    <li><a href="#"><i class="icon icon-tint"></i> <span>Group</span></a>
+      <ul>
+        <li><a href="/group/">队伍列表</a></li>
+        <li><a href="/group/mygroup/">我的队伍</a></li>
+        <li><a href="/group/create/">创建队伍</a></li>
+      </ul>
+    </li>
+    <!--li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Note</span></a></li-->
+  </ul>
+</div>
+{% block content %}
+{% endblock %}
+<div class="row-fluid">
+  <div id="footer" class="span12" style="bottom:0"> 2017 &copy; <a href="http://www.ustil.cn/" target="_blank" title="大学生科技创新实验室">USTIL</a> - <a href="http://刘思琪.xyz/" title="blog" target="_blank">647</a> </div>
+</div>
+{% block beforjs %}            
+{% endblock %}
+<script src="/static/js/jquery.min.js"></script> 
+<script src="/static/js/jquery.ui.custom.js"></script> 
+<script src="/static/js/bootstrap.min.js"></script> 
+<script src="/static/js/jquery.uniform.js"></script> 
+<script src="/static/js/select2.min.js"></script> 
+<script src="/static/js/jquery.dataTables.min.js"></script> 
+<script src="/static/js/maruti.js"></script> 
+<script src="/static/js/maruti.tables.js"></script>
+
+<script>
+        $(document).ready(function(){
+                $("#searcher").click(function(){
+                $.get("/searchpage/",{}, function(ret){
+                    $('#SearchSpan').html(ret);
+                })
+              });
+            });
+</script>
+{% block js %}            
+{% endblock %}
+</body>
+</html>

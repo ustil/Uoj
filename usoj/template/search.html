@@ -1,0 +1,179 @@
+			<script type="text/javascript">
+            function search1(style){
+                if(style=='block')
+                {
+                    document.getElementById('search1').style.display='block';
+                    document.getElementById('pro_id').disabled=false;
+                    document.getElementById('pro_title').disabled=false;
+                    document.getElementById('pro_diff').disabled=false;
+                    document.getElementById('pro_user').disabled=false;
+                }
+                else
+                {
+                    document.getElementById('search1').style.display='none';
+                    document.getElementById('pro_id').disabled=true;
+                    document.getElementById('pro_title').disabled=true;
+                    document.getElementById('pro_diff').disabled=true;
+                    document.getElementById('pro_user').disabled=true;
+                }
+            }
+            function search2(style){
+                if(style=='block')
+                {
+                    document.getElementById('search2').style.display='block';
+                    document.getElementById('sol_id').disabled=false;
+                    document.getElementById('sol_title').disabled=false;
+                    document.getElementById('sol_user').disabled=false;
+                }
+                else
+                {
+                    document.getElementById('search2').style.display='none';
+                    document.getElementById('sol_id').disabled=true;
+                    document.getElementById('sol_title').disabled=true;
+                    document.getElementById('sol_user').disabled=true;
+                }
+            }
+            function search3(style){
+                if(style=='block')
+                {
+                    document.getElementById('search3').style.display='block';
+                    document.getElementById('con_id').disabled=false;
+                    document.getElementById('con_title').disabled=false;
+                }
+                else
+                {
+                    document.getElementById('search3').style.display='none';
+                    document.getElementById('con_id').disabled=true;
+                    document.getElementById('con_title').disabled=true;
+                }
+            }
+            function search4(style){
+                if(style=='block')
+                {
+                    document.getElementById('search4').style.display='block';
+                    document.getElementById('gro_id').disabled=false;
+                    document.getElementById('gro_title').disabled=false;
+                }
+                else
+                {
+                    document.getElementById('search4').style.display='none';
+                    document.getElementById('gro_id').disabled=true;
+                    document.getElementById('gro_title').disabled=true;
+                }
+            }
+            function search(value){
+	            var Name = 'search' + value;
+                if(Name=='search1')
+                {
+                    search1('block');
+                    search2('none');
+                    search3('none');
+                    search4('none');
+                }
+                else if(Name=='search2')
+                {
+                    search1('none');
+                    search2('block');
+                    search3('none');
+                    search4('none');
+                }
+                else if(Name=='search3')
+                {
+                    search1('none');
+                    search2('none');
+                    search3('block');
+                    search4('none');
+                }
+                else if(Name=='search4')
+                {
+                    search1('none');
+                    search2('none');
+                    search3('none');
+                    search4('block');
+                }
+            }
+            </script>
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="widget-box">
+							<div class="widget-content nopadding">
+								<form action="/search/" method="get" class="form-horizontal">
+                                    <div class="control-group">
+										<label class="control-label">Search type</label>
+										<div class="controls ">
+											<select id="type" name="type" onChange="javascript:search(this.value)">
+												<option value="1">Problem</option>
+												<option value="2">Solution</option>
+												<option value="3">Contest</option>
+												<option value="4">Group</option>
+											</select>
+										</div>
+									</div>
+                                    <div id="search1" style="display:block;">
+                                        <div class="control-group">
+					        		        <label class="control-label">编号 :</label>
+										    <div class="controls"><input id="pro_id" name="pro_id" type="text" class="span9" placeholder="Problem ID" /> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">题目 :</label>
+										    <div class="controls"><input id="pro_title" name="pro_title" type="text" class="span9" placeholder="Problem Title" /> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">难度 :</label>
+										    <div class="controls"><input id="pro_diff" name="pro_diff" type="text" class="span9" placeholder="Problem Difficulty" /> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">上传者 :</label>
+										    <div class="controls"><input id="pro_user" name="pro_user" type="text" class="span9" placeholder="Problem Uploader" /> </div>
+								    	</div>
+                                    </div>
+                                    <div id="search2" style="display:none;">
+                                        <div class="control-group">
+					        		        <label class="control-label">编号 :</label>
+										    <div class="controls"><input id="sol_id" name="sol_id" type="text" class="span9" placeholder="Solution ID" disabled="true"/> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">题目 :</label>
+										    <div class="controls"><input id="sol_title" name="sol_title" type="text" class="span9" placeholder="Solution Problem" disabled="true"/> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">用户 :</label>
+										    <div class="controls"><input id="sol_user" name="sol_user" type="text" class="span9" placeholder="Solution Uploader" disabled="true"/> </div>
+								    	</div>
+                                    </div>
+                                    <div id="search3" style="display:none;">
+                                        <div class="control-group">
+					        		        <label class="control-label">编号 :</label>
+										    <div class="controls"><input id="con_id" name="con_id" type="text" class="span9" placeholder="Contest ID" disabled="true"/> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">名称 :</label>
+										    <div class="controls"><input id="con_title" name="con_title" type="text" class="span9" placeholder="Contest Title" disabled="true"/> </div>
+								    	</div>
+                                    </div>
+                                    <div id="search4" style="display:none;">
+                                        <div class="control-group">
+					        		        <label class="control-label">编号 :</label>
+										    <div class="controls"><input id="gro_id" name="gro_id" type="text" class="span9" placeholder="Group ID" disabled="true"/> </div>
+								    	</div>
+                                        <div class="control-group">
+					        		        <label class="control-label">名称 :</label>
+										    <div class="controls"><input id="gro_title" name="gro_title" type="text" class="span9" placeholder="Group Name" disabled="true"/> </div>
+								    	</div>
+                                    </div>
+                                    <div class="control-group">
+										<label class="control-label">精准搜索</label>
+										<div class="controls">
+											<label><input type="checkbox" name="exact" id="exact" value="1" /></label>
+										</div>
+									</div>
+									<div class="form-actions">
+										<button type="submit" class="btn btn-success">Search</button>
+									</div>
+								</form>
+							</div>
+						</div>						
+					</div>
+				</div>
+            </div>

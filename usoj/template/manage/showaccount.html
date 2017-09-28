@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="/manage/">Manage</a> <a href="/manage/problem/" class="current">Account</a> </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="account" class="modal hide modal-test">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">×</button>
+                <h3>操作</h3>
+            </div>
+            <div class="modal-body">
+                <p><span id='warning'>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="accordion" id="collapse-group">
+            <form action="/manage/add/account/" method="post" id="accountform">
+                <input id="id_id" name="id" type="hidden"/>
+                <div class="row-fluid" style="margin:10px;">
+                    <div class="span6">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>用户名</h5>
+                            </div>
+                            <div class="widget-content">
+                                <input id="id_username" name="username" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>真实姓名</h5>
+                            </div>
+                            <div class="widget-content">
+                                 <input id="id_realname" name="realname" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" style="margin:10px;">
+                    <div class="span6">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>权限等级</h5>
+                            </div>
+                            <div class="widget-content">
+                                <input id="id_admin_type" name="admin_type" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>密码</h5>
+                            </div>
+                            <div class="widget-content">
+                                 <input id="id_password" name="password" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</span></p>
+            </div>
+                <div class="modal-footer"><button class="btn btn-primary">Confirm</button> <a data-dismiss="modal" class="btn" href="#">Cancel</a> </div>
+            </form>
+        </div>
+        <div class="widget-box">
+          <div class="widget-title">
+             <span class="icon"><i class="icon-th"></i></span> 
+            <h5>Accounts</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="20%">用户名</th>
+                  <th width="20%">真实姓名</th>
+                  <th width="20%">权限等级</th>
+                  <th width="40%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in users %}
+                <tr>
+                  <td style='vertical-align: middle !important; text-align: center;'>{{ user.username }}</td>
+                  <td style='vertical-align: middle !important; text-align: center;'>{{ user.real_name }}</td>
+                  <td style='vertical-align: middle !important; text-align: center;'><a>{{ user.admin_type }}</a></td>
+                  <td style='vertical-align: middle !important; text-align: center;'><button id='edit' value='{{ user.id }}' href="#account" data-toggle="modal" class='btn'>编辑</button></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="/static/js/jquery.form.js"></script>
+<script>
+$(document).ready(function(){
+    $("[id = edit]").click(function(){
+        $.post("/manage/edit/account/",{'id':$(this).val()}, function(ret){
+            ret = eval(ret);
+            $("#id_id").val(ret.id);
+            $("#id_username").val(ret.username);
+            $("#id_realname").val(ret.real_name);
+            $("#id_password").val(ret.password);
+            $("#id_admin_type").val(ret.admin_type);
+        })
+    });
+    $('#accountform').bind('submit', function(){
+        $(this).ajaxSubmit({
+         success: function(data) {
+                alert(data);
+                if(data == '修改成功。')
+                    location.reload();
+            }
+       });
+       return false;
+    });
+});
+</script>
+{% endblock %}

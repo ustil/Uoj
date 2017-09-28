@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom current"><i class="icon-home"></i> Home</a></div>
+  </div>
+  <div  class="quick-actions_homepage">
+    <ul class="quick-actions">
+          <li> <a href="/solution/my/"> <i class="icon-dashboard"></i> 我的提交 </a> </li>
+          <li> <a href="#chat" data-toggle="modal"> <i class="icon-web"></i> 在线交流 </a> </li>
+          <li> <a href="/contest/"> <i class="icon-calendar"></i> 赛程查看 </a> </li>
+          <li> <a href="#"> <i class="icon-people"></i> 信息管理 </a> </li>
+        </ul>
+  </div>
+  <div id="chat" class="modal hide modal-test">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">×</button>
+                <h3>在线交流</h3>
+            </div>
+            <div class="modal-body">
+                <iframe src="http://chat.ustil.cn/" frameBorder="0" height="800" scrolling="no" width="100%"></iframe>
+            </div>
+            <div class="modal-footer"><a data-dismiss="modal" class="btn btn-primary" href="#">Cancel</a> </div>
+   </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12"> 
+        <div class="widget-box">
+          <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span>
+            <h5>提交量</h5>
+          </div>
+          <div class="widget-content">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="demo-container">
+			        <div id="placeholder" class="demo-placeholder"></div>
+		        </div>
+              </div>
+            </div></div></div>
+        <div class="row-fluid">
+              <div class="span12">
+                <div class="widget-box">
+                  <div class="widget-title"> <span class="icon"> <i class="icon-refresh"></i> </span>
+                    <h5>最新公告</h5>
+                  </div>
+                  <div class="widget-content nopadding updates">
+                    {% for notice in notices %}
+                        <div class="new-update clearfix"> <i class="icon-leaf"></i> <span class="update-done"> <a title="" href="#"><strong>{{notice.title}}</strong></a><span>{{ notice.description|safe }}</span></span> <span class="update-date"><span class="update-day">{{ notice.create_time|date:"d" }}</span>{{ notice.create_time|date:"m" }}</span> </div>
+                    {% empty %}
+                        <div class="new-update clearfix"> <i class="icon-leaf"></i> <span class="update-done"> <a title="" href="#"><strong>暂无公告</strong></a><span>暂无公告</span></span> <span class="update-date"><span class="update-day">/</span>/</span> </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+          </div> 
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block beforjs %}
+<script src="/static/js/excanvas.min.js"></script> 
+{% endblock%}
+{% block js %}
+    <link href="/static/css/examples.css" rel="stylesheet" type="text/css">
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		var data = [],
+			totalPoints = 300;
+		function getRandomData() {
+			if (data.length > 0)
+				data = data.slice(1);
+			while (data.length < totalPoints) {
+				var prev = data.length > 0 ? data[data.length - 1] : 50,
+					y = prev + Math.random() * 10 - 5;
+				if (y < 0) {
+					y = 0;
+				} else if (y > 100) {
+					y = 100;
+				}
+				data.push(y);
+			}
+			var res = [];
+			for (var i = 0; i < data.length; ++i) {
+				res.push([i, data[i]])
+			}
+			return res;
+		}
+
+		var updateInterval = 300;
+		var plot = $.plot("#placeholder", [ getRandomData() ], {
+			series: {
+				shadowSize: 0
+			},
+			yaxis: {
+				min: 0,
+				max: 100
+			},
+			xaxis: {
+				show: false
+			}
+		});
+		function update() {
+			plot.setData([getRandomData()]);
+			plot.draw();
+			setTimeout(update, updateInterval);
+		}
+		update();
+	});
+	</script>
+{% endblock%}

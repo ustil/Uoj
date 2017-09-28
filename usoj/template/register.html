@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div id="content">
+            <div id="content-header">
+                <div id="breadcrumb">
+                    <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+                    <a href="/account/register/" class="current">Register</a>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-pencil"></i>
+                                </span>
+                                <h5>Register</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form action="" id="form-wizard" class="form-horizontal" method="post">
+                                    {% csrf_token %}
+                                    <div id="form-wizard-1" class="step">
+                                        <div class="control-group {% if form.username.errors %}error{% endif %}">
+                                            <label class="control-label">Username</label>
+                                            <div class="controls">
+                                                <input id="id_username" type="text" name="username" />
+                                                {% if form.username.errors %}
+                                                    <span for="username" generated="true" class="help-inline">{{ form.username.errors }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="control-group {% if form.password.errors %}error{% endif %}">
+                                            <label class="control-label">Password</label>
+                                            <div class="controls">
+                                                <input id="id_password" type="password" name="password" />
+                                                {% if form.password.errors %}
+                                                    <span for="password" generated="true" class="help-inline">{{ form.password.errors}}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="control-group {% if form.confirm.errors %}error{% endif %}">
+                                            <label class="control-label">Confirm Password</label>
+                                            <div class="controls">
+                                                <input id="id_confirm" type="password" name="confirm" />
+                                                {% if form.confirm.errors %}
+                                                    <span for="confirm" generated="true" class="help-inline">{{ form.confirm.errors }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                            <input id="submit" class="btn btn-primary" type="submit" value="Register" />
+                                            <div id="status"></div>
+                                    </div>
+                                    <div id="submitted"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

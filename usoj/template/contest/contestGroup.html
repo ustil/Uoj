@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+		<div id="content">
+			<div id="content-header">
+			<div id="breadcrumb">
+				<a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+				<a href="/contest/" class="current">Contest</a>
+				<a href="/contest/detail/{{ contest.id }}" class="current">{{ contest.title }}</a>
+				<a href="#" class="current">参赛队伍/人员</a>
+            </div>
+			<div class="container-fluid">
+                <div class="row-fluid">
+				<div class="span12">
+						<div class="widget-box">
+							<div class="widget-title">
+								<span class="icon"><i class="icon-time"></i></span>
+								<h5>Groups</h5>
+							</div>
+							<div class="widget-content nopadding">
+								<table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>序号</th>
+                                                <th>队伍名称/参赛人姓名</th>
+                                                <th>队员</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if contest.contest_type == 3 or contest.contest_type == 4 %}
+                                            {% for group in contest.groups.all %}
+                                            <tr>
+                                                <td style='vertical-align: middle !important; text-align: center;'>{{ forloop.counter }} </td>
+                                                <td style='vertical-align: middle !important; text-align: center;'>{{ group.name }} </td>
+                                                <td style='vertical-align: middle !important; text-align: center;'>
+                                                {% for member in group.groupmember_set.all %}
+                                                    {{ member.account.username }} &nbsp;
+                                                {% endfor %}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% elif contest.contest_type == 2 or contest.contest_type == 5  %}
+                                            {% for user in contest.users.all %}
+                                            <tr>
+                                                <td style='vertical-align: middle !important; text-align: center;'>{{ forloop.counter }}</td>
+                                                <td style='vertical-align: middle !important; text-align: center;'>/</td>
+                                                <td style='vertical-align: middle !important; text-align: center;'>{{ user.username }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+							</div>
+						</div>
+					</div>
+				 </div>
+			</div>
+		</div>
+        </div>
+        {% endblock %}

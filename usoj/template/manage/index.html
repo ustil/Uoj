@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a><a href="/manage/" class="current">Manage</a></div>
+  </div>
+  <div  class="quick-actions_homepage">
+    <ul class="quick-actions">
+          <li> <a href="/manage/notice/"> <i class="icon-calendar"></i> 公告管理 </a> </li>
+          <li> <a href="/manage/problem/"> <i class="icon-web"></i> 题目管理 </a> </li>
+          <li> <a href="/manage/contest/"> <i class="icon-web"></i> 比赛管理 </a> </li>
+          <li> <a href="/manage/account/"> <i class="icon-people"></i> 用户管理 </a> </li>
+          <li> <a href="/manage/group/"> <i class="icon-people"></i> 队伍管理 </a> </li>
+          <li> <a href="/manage/rejudge/"> <i class="icon-dashboard"></i> 重新判题 </a> </li>
+          <li> <a href="/manage/judger/"> <i class="icon-dashboard"></i> 判题机管理 </a> </li>
+        </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/jquery.flot.min.js"></script> 
+<script src="/static/js/jquery.flot.resize.min.js"></script> 
+<script src="/static/js/jquery.peity.min.js"></script> 
+<script src="/static/js/fullcalendar.min.js"></script> 
+<script src="/static/js/maruti.js"></script> 
+<script src="/static/js/maruti.dashboard.js"></script> 
+<script src="/static/js/maruti.chat.js"></script> 
+{% endblock%}

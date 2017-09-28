@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+		<div id="content">
+			<div id="content-header">
+                <div id="breadcrumb">
+                    <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+                    <a href="/group/" class="tip-bottom">Group</a>
+                    <a href="/group/create/" class="current">Create</a>
+                </div>
+			</div>
+			
+			<div class="container-fluid">
+                <div id="upwarning" class="modal hide">
+                            <div class="modal-header">
+                                <button data-dismiss="modal" class="close" type="button">×</button>
+                                <h3>创建队伍</h3>
+                            </div>
+                            <div class="modal-body">
+                                <p><span id='warning'>正在处理</span></p>
+                            </div>
+                            <div class="modal-footer"><a class="btn btn-primary" href="/group/mygroup/">Cancel</a> </div>
+                        </div>
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="widget-box">
+							<div class="widget-title">
+								<span class="icon">
+									<i class="icon-align-justify"></i>
+								</span>
+								<h5>创建队伍</h5>
+							</div>
+							<div class="widget-content nopadding">
+								<form action="" method="post" class="form-horizontal">
+									<div class="control-group">
+										<label class="control-label">队伍名称:</label>
+										<div class="controls">
+											<input id='id_groupname' type="text" class="span20" placeholder="Name"/>
+										</div>
+									</div>
+                                    <div class="control-group">
+										<label class="control-label">队伍类型</label>
+										<div class="controls">
+											<select id='id_type'>
+												<option value='1'>比赛队伍</option>
+												<option value='2'>交流组织</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-actions">
+										<button id='create' href="#upwarning" data-toggle="modal" class="btn btn-success">创建</button>
+									</div>
+								</form>
+							</div>
+						</div>						
+					</div>
+				</div>
+                
+                
+                </div>
+			</div>
+        {% endblock %}
+        
+        {% block js %}
+        <script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $(document).ready(function(){
+                $("#create").click(function(){
+                $.post("/group/create/",{'groupname': $("#id_groupname").val(), 'type': $("#id_type").val()}, function(ret){
+                $('#warning').html(ret);
+                })
+              });
+            });
+        </script>
+        {% endblock %}

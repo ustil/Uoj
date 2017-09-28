@@ -1,0 +1,154 @@
+<!--link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/test/select2-4.0.0/dist/css/select2.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/maruti-style.css" />
+<link rel="stylesheet" href="/static/css/maruti-media.css" class="skin-color" />
+<script src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.formset.js" ></script>
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/test/select2-4.0.0/dist/js/select2.min.js"></script>
+    <style type="text/css">
+    .add-row {
+        padding-left:18px;
+        background:url(/static/images/add.png) no-repeat left center;
+    }
+    .delete-row {
+        float:right;
+        display:block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+        background:url(/static/images/delete.png) no-repeat left center;
+        width:16px;
+        height:16px;
+    }
+</style-->
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="accordion" id="collapse-group">
+            <h1 style='text-align: center;'>标题：<input id="id_title" maxlength="50" name="title" type="text" /></h1>
+            <div class="collapse in accordion-body" id="collapse">
+                <div class="row-fluid" style="margin:10px;">
+                    <div class="span3">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>开始时间</h5>
+                            </div>
+                            <div class="widget-content">
+                                <input id="id_start_time" name="start_time" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span3">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>结束时间</h5>
+                            </div>
+                            <div class="widget-content">
+                                 <input id="id_end_time" name="end_time" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span3">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>比赛类型</h5>
+                            </div>
+                            <div class="widget-content">
+							    <select id="type" name="type" style="width:100%;">
+								    <option value="1">公开赛</option>
+								    <option value="2">Solution</option>
+								    <option value="3">Contest</option>
+									<option value="4">Group</option>
+						        </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span3">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>密码</h5>
+                            </div>
+                            <div class="widget-content">
+                                <input id="id_password" maxlength="20" name="password" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" style="margin:10px;">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>比赛描述</h5>
+                            </div>
+                            <div class="widget-content">
+                                <script id="id_description" name="description" style="display: inline-block;" type="text/plain" class="row-fluid"></script>
+                                <script type="text/javascript">
+                                    
+                                    var id_description = UE.getEditor('id_description',{'toolbars': [['source', 'undo', 'redo', 'bold', 'italic', 'underline', 'forecolor', 'backcolor', 'superscript', 'subscript', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'blockquote', 'formatmatch', 'removeformat', 'autotypeset', 'inserttable', 'pasteplain', 'wordimage', 'searchreplace', 'map', 'preview', 'fullscreen'], ['insertcode', 'paragraph', 'fontfamily', 'fontsize', 'link', 'unlink', 'insertimage', 'insertvideo', 'attachment', 'emotion', 'date', 'time']], 'initialFrameWidth': '100%', 'initialFrameHeight': 100, 'serverUrl': '/ueditor/controller/?imagePathFormat=uploads%2Fimages%2F&filePathFormat=uploads%2Ffiles%2F'});
+                                     id_description.ready(function(){
+                                     });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" style="margin:10px;">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-th-list"></i>
+                                </span>
+                                <h5>题目</h5>
+                            </div>
+                            <div class="widget-content">
+                                <table style="width:100%" id="id_contact_info_table" border="0" cellpadding="0" cellspacing="5">
+                                    <tbody>
+                                        {% for form in forms %}
+                                            <tr id="{{ form.prefix }s}-row">
+                                                {% for each in form %}
+                                                    <td>{{ each }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {{ forms.management_form }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function() {            
+    $(".add-row").click(function(){
+        $("select").select2();
+    });
+})
+$("select").select2();
+$('#id_contact_info_table tbody tr').formset();
+</script>

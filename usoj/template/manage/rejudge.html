@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content">
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href="/manage/" class="tip-bottom">Manage</a>
+            <a href="/manage/rejudge/" class="current">Rejudge</a>
+        </div>
+    </div>
+	<div class="container-fluid">
+        <div id="rejudge" class="modal hide">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">×</button>
+                <h3>重新判题</h3>
+            </div>
+            <div class="modal-body">
+                <p><span id='warning'>正在处理</span></p>
+            </div>
+            <div class="modal-footer"><a class="btn btn-primary" href="#">Cancel</a> </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <span class="icon">
+                            <i class="icon-align-justify"></i>
+                        </span>
+                        <h5>重新判题</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <form action="" method="post" class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label">重判编号：</label>
+                                <div class="controls">
+                                    <input id='id' type="text" class="span20" placeholder="Id"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">重判类型：</label>
+                                <div class="controls">
+                                    <select id='type'>
+                                        <option value='solution'>状态编号</option>
+                                        <option value='pro'>题目题目</option>
+                                        <option value='contestpro'>比赛题目</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button id='rej' href="#rejudge" data-toggle="modal" class="btn btn-success">重判</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>						
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+        
+{% block js %}
+<script>
+$(document).ready(function(){
+    $("#rej").click(function(){
+        $.post("/manage/rejudge/",{'type': $("#type").val(), 'id': $("#id").val()}, function(ret){
+            ret = $.parseJSON(ret);
+            $('#warning').html(ret.reason);
+        })
+    });
+});
+</script>
+{% endblock %}
