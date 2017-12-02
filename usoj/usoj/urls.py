@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from DjangoUeditor import urls as DjangoUeditor_urls
 from index.views import search, searchpage
+from django.conf.urls.static import static
+import usoj.settings
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -35,7 +37,5 @@ urlpatterns = [
     url(r'^ueditor/', include('DjangoUeditor.urls')),
 ]
 
-from django.conf.urls.static import static
-import usoj.settings
-
-urlpatterns += static(usoj.settings.MEDIA_URL, document_root=usoj.settings.MEDIA_ROOT)
+urlpatterns += static(usoj.settings.MEDIA_URL,
+                      document_root=usoj.settings.MEDIA_ROOT)

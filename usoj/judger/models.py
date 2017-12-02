@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Judger(models.Model):
     max = models.IntegerField(default=4)
     ip = models.CharField(max_length=30, default='0.0.0.0')
@@ -11,4 +12,4 @@ class Judger(models.Model):
         db_table = "judger"
 
     def __str__(self):
-        return str(self.id) + '-' + self.ip + ':' + str(port)
+        return str(self.id) + '-' + self.ip + ':' + str(self.port)

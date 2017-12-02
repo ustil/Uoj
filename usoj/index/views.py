@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from index.models import Notice
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.db.models import Q
 from problem.models import Problem
 from solution.models import Solution
@@ -9,17 +9,21 @@ from contest.models import Contest
 from group.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 def index(request):
     notices = Notice.objects.order_by('create_time')[:5]
     return render(request, 'index.html', {'notices': notices})
+
 
 class NoticeForm(forms.ModelForm):
     class Meta:
         model = Notice
         fields = ['title', 'description']
 
+
 def searchpage(request):
     return render(request, 'search.html')
+
 
 def search(request):
     type = request.GET.get('type')
@@ -29,7 +33,7 @@ def search(request):
         title = request.GET.get('pro_title')
         diff = request.GET.get('pro_diff')
         user = request.GET.get('pro_user')
-        
+
         if exact:
             answer = Problem.objects.filter(visible=True)
             if id:
@@ -47,7 +51,7 @@ def search(request):
             answer = answer.filter(Q(created_by__username__contains=str(user)))
 
         paginator = Paginator(answer, 25)
- 
+
         page = request.GET.get('page')
         try:
             contacts = paginator.page(page)
@@ -86,12 +90,13 @@ def search(request):
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
 
-        return render(request, 'solution/solution.html', {'solutions': contacts})
+        return render(request, 'solution/solution.html',
+                      {'solutions': contacts})
 
     elif type == "3":
         id = request.GET.get('con_id')
         title = request.GET.get('con_title')
-        
+
         if exact:
             answer = Contest.objects.all()
             if id:
@@ -103,7 +108,7 @@ def search(request):
             answer = answer.filter(Q(title__contains=str(title)))
 
         paginator = Paginator(answer, 25)
- 
+
         page = request.GET.get('page')
         try:
             contacts = paginator.page(page)
@@ -115,11 +120,11 @@ def search(request):
         return render(request, 'contest/contest.html', {'contests': contacts})
 
     elif type == "4":
-        #gro_id=&gro_title=&gro_member=
+        # gro_id=&gro_title=&gro_member=
         id = request.GET.get('gro_id')
         title = request.GET.get('gro_title')
-        member = request.GET.get('gro_member')
-        
+        # member = request.GET.get('gro_member')
+
         if exact:
             answer = Group.objects.all()
             if id:
@@ -130,7 +135,7 @@ def search(request):
             answer = Group.objects.filter(Q(id__contains=str(id)))
             answer = answer.filter(Q(name__contains=str(title)))
         paginator = Paginator(answer, 25)
- 
+
         page = request.GET.get('page')
         try:
             contacts = paginator.page(page)
@@ -143,13 +148,14 @@ def search(request):
     else:
         return HttpResponseRedirect("/")
 
+
 def addNotice(request):
     if request.method == 'POST':
         form = NoticeForm(request.POST)
         if form.is_valid():
-            notice = Notice(title=form.cleaned_data['title'], \
-                              description=form.cleaned_data['description'], \
-                              created_by=request.user)
+            notice = Notice(title=form.cleaned_data['title'],
+                            description=form.cleaned_data['description'],
+                            created_by=request.user)
             notice.save()
             return HttpResponseRedirect("/")
         else:

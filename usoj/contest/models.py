@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 from django.db import models
 from django.utils.timezone import now
 from account.models import User
@@ -7,6 +7,7 @@ from problem.models import Problem
 from group.models import Group
 from jsonfield import JSONField
 
+
 class Contest(models.Model):
     type_choices = (
         (1, '公开赛'),
@@ -14,11 +15,12 @@ class Contest(models.Model):
         (3, '小组赛'),
         (4, '邀请赛-小组'),
         (5, '邀请赛-个人'),
-        (6, '考试'),
-        )
+        (6, '考试'),)
     title = models.CharField(max_length=30)
-    description = UEditorField('description', height=100, width=200,default=u'', blank=True, \
-                               imagePath="uploads/images/",toolbars='besttome', filePath='uploads/files/')
+    description = UEditorField('description', height=100,
+                               width=200, default=u'', blank=True,
+                               imagePath="uploads/images/",
+                               toolbars='besttome', filePath='uploads/files/')
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     create_time = models.DateTimeField(auto_now_add=True)
@@ -42,6 +44,7 @@ class Contest(models.Model):
     class Meta:
         db_table = "contest"
 
+
 class ContestProblem(models.Model):
     show_id = models.CharField(max_length=5, blank=True)
     all = models.IntegerField(default=0)
@@ -52,6 +55,7 @@ class ContestProblem(models.Model):
 
     class Meta:
         db_table = "contest_problem"
+
 
 class ContestRank(models.Model):
     contest = models.ForeignKey(Contest)

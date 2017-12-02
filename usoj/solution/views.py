@@ -1,20 +1,13 @@
-#coding: utf-8
+# coding: utf-8
 from django.shortcuts import render
 from solution.models import Solution
-from problem.models import Problem
-from contest.models import ContestRank, ContestProblem
+
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
-from DjangoUeditor.forms import UEditorField
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-import zipfile
-import urllib, urllib2
-import random
-import os
-from django.utils.timezone import now
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+
 
 class CodeForm(forms.Form):
     langChoices = (
@@ -33,17 +26,16 @@ class CodeForm(forms.Form):
         ('clang', 'clang'),
         ('clang++', 'clang++'),
         ('luac', 'luac'),
-        ('js', 'js'),
-        )
-    problemId = forms.CharField(label='题目:', max_length = 10, min_length = 1)
+        ('js', 'js'))
+    problemId = forms.CharField(label='题目:', max_length=10,
+                                min_length=1)
     lang = forms.ChoiceField(label='语言:', choices=langChoices)
     code = forms.CharField(label='代码:', widget=forms.Textarea)
 
+
 def solutionList(request):
     solutions = Solution.objects.filter(contest=None)
-    
     paginator = Paginator(solutions, 25)
- 
     page = request.GET.get('page')
     try:
         contacts = paginator.page(page)
@@ -53,13 +45,12 @@ def solutionList(request):
         contacts = paginator.page(paginator.num_pages)
 
     return render(request, 'solution/solution.html', {'solutions': contacts})
+
 
 @login_required(login_url='/account/login/')
 def mySolution(request):
     solutions = Solution.objects.filter(contest=None, user_id=request.user)
-    
     paginator = Paginator(solutions, 25)
- 
     page = request.GET.get('page')
     try:
         contacts = paginator.page(page)
@@ -69,6 +60,7 @@ def mySolution(request):
         contacts = paginator.page(paginator.num_pages)
 
     return render(request, 'solution/solution.html', {'solutions': contacts})
+
 
 @login_required(login_url='/account/login/')
 def getCode(request):
@@ -76,11 +68,13 @@ def getCode(request):
         if request.GET['id']:
             try:
                 id = request.GET['id']
-                sol = Solution.objects.get(solution_id=id, user_id=request.user)
+                sol = Solution.objects.get(solution_id=id,
+                                           user_id=request.user)
                 return HttpResponse(str(sol.code))
-            except:
+            except Exception:
                 return HttpResponse('发生错误。')
     return HttpResponse('发生错误。')
+
 
 @login_required(login_url='/account/login/')
 def getStatus(request):
@@ -88,12 +82,13 @@ def getStatus(request):
         if request.GET['id']:
             try:
                 id = request.GET['id']
-                sol = Solution.objects.get(solution_id=id, user_id=request.user)
+                sol = Solution.objects.get(solution_id=id,
+                                           user_id=request.user)
                 results = {}
                 results['result'] = sol.result
                 results['time'] = sol.runtime
                 results['memory'] = sol.memory
                 return HttpResponse(json.dumps(results))
-            except:
+            except Exception:
                 return HttpResponse('ERROR')
     return HttpResponse('ERROR')
