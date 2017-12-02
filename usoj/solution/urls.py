@@ -1,5 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from . import views
+from django.conf.urls.static import static
+import usoj.settings
 
 urlpatterns = [
     url(r'^$', views.solutionList, name='solution'),
@@ -8,7 +10,6 @@ urlpatterns = [
     url(r'^getstatus/', views.getStatus, name='status'),
 ]
 
-from django.conf.urls.static import static
-import usoj.settings
 
-urlpatterns += static(usoj.settings.MEDIA_URL, document_root=usoj.settings.MEDIA_ROOT)
+urlpatterns += static(usoj.settings.MEDIA_URL,
+                      document_root=usoj.settings.MEDIA_ROOT)
